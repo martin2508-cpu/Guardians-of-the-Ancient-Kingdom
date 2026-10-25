@@ -78,7 +78,8 @@ Fórmulas
 Guerrero: `max(0, floor(ataque * 1.20) - defensa_objetivo)`.
 Mago: `ataque`.
 Arquero: si `ataque > defensa_objetivo`, `(ataque - defensa_objetivo) * 2`; en caso contrario, `0`.
-11. Ejecución
+
+10. Ejecución
 Desde la carpeta del proyecto:
 ```bash
 python main.py
@@ -91,11 +92,13 @@ Para ejecutar las pruebas automatizadas:
 ```bash
 python -m pytest -v
 ```
-10. Pruebas y resultados
+
+11. Pruebas y resultados
 Las pruebas comprueban la creación de personajes, rechazo de datos inválidos, habilidades de las tres clases, vida no negativa, bloqueo de ataques de personajes derrotados, objetivo inválido, ganador correcto y empate técnico sin daño.
 Al ejecutar `python -m pytest -v`, Pytest muestra el estado individual de cada prueba y un resumen final. No se afirma un resultado de ejecución hasta que se ejecute en el equipo o entorno correspondiente.
-11. Reto de abstracción
+
+12. Reto de abstracción
 `atacar()` debe ser abstracto porque todos los personajes tienen la capacidad de atacar, pero la manera de hacerlo cambia según su especialidad. El Guerrero potencia su ataque y resta la defensa; el Mago ignora la defensa; y el Arquero duplica el daño base solo cuando su ataque supera la defensa. Si la clase base proporcionara una única implementación de `atacar()`, obligaría a todos a compartir una regla que no representa sus habilidades. Por eso `@abstractmethod` exige que cada subclase defina su propia versión y permite que `Combate` llame a `atacar()` de forma polimórfica.
 En cambio, `recibir_danio()` sí puede implementarse en `Personaje` porque la regla de recibir daño es común: validar que no sea negativo, descontar como máximo la vida disponible y evitar que la vida baje de cero. El daño ya llega calculado desde el ataque, así que este método no vuelve a descontar la defensa. Así se reutiliza una única regla general y se evita duplicar código en las tres clases.
-12. Conclusión
+13. Conclusión
 El proyecto muestra cómo organizar un programa con clases responsables, validar el estado de los objetos y extender el sistema mediante herencia y polimorfismo. Para añadir otra clase de guardián, se puede heredar de `Personaje` e implementar `atacar()` sin cambiar la lógica central de `Combate`.
