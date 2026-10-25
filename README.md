@@ -1,6 +1,9 @@
 Guardians of the Ancient Kingdom
 Proyecto integrador — Sistema de combate por turnos
+
+Estudiante: Martín Alejandro Castro Berdugo
 Asignatura: Programación Orientada a Objetos con Python
+
 1. Descripción
 Guardians of the Ancient Kingdom es un sistema de combate por turnos entre guardianes de tres clases: Guerrero, Mago y Arquero. Cada personaje tiene nombre, vida, ataque y defensa. El programa calcula los ataques según la habilidad de cada clase, actualiza la vida y determina si hay un ganador, empate técnico o empate por límite de rondas.
 2. Requisitos
