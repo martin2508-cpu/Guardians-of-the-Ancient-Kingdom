@@ -67,19 +67,22 @@ El triángulo de herencia indica que cada guardián es un tipo de `Personaje`. E
 Herencia: Guerrero, Mago y Arquero heredan los atributos y métodos comunes de `Personaje`.
 Asociación: durante un ataque, un personaje interactúa con otro al invocar su método `recibir_danio()`.
 Agregación: `Combate` recibe dos objetos ya creados y los coordina; no los crea como parte obligatoria de su constructor.
+
 7. Conceptos de POO aplicados
 Abstracción: `Personaje` representa lo que todos los guardianes tienen en común. Es abstracta y no se puede instanciar directamente.
 Encapsulamiento: los atributos se almacenan como atributos privados (`__nombre`, `__vida`, `__ataque`, `__defensa`) y se accede a ellos mediante propiedades que validan los datos.
 Herencia: las tres clases concretas reutilizan la estructura común de `Personaje`.
+
 Polimorfismo: `Combate` llama a `atacar()` sin preguntar qué clase concreta tiene el participante; Python ejecuta la versión correspondiente.
 Validaciones y excepciones: se rechazan nombres vacíos, tipos incorrectos y valores fuera de los rangos establecidos.
-8. Lógica del combate
+
+9. Lógica del combate
 Cada ronda da una oportunidad de ataque a cada participante, mientras siga vivo. Después de cada ataque se muestra el estado actualizado. El combate termina cuando queda un único personaje vivo, cuando una ronda completa causa cero daño o al llegar a 50 rondas. `recibir_danio()` limita el daño aplicado a la vida restante y devuelve el daño efectivo, por lo que la vida no puede ser negativa.
 Fórmulas
 Guerrero: `max(0, floor(ataque * 1.20) - defensa_objetivo)`.
 Mago: `ataque`.
 Arquero: si `ataque > defensa_objetivo`, `(ataque - defensa_objetivo) * 2`; en caso contrario, `0`.
-9. Ejecución
+10. Ejecución
 Desde la carpeta del proyecto:
 ```bash
 python main.py
