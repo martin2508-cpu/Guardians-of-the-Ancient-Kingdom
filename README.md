@@ -7,12 +7,12 @@
 
 ## 1. Descripción
 
-Guardians of the Ancient Kingdom es un sistema de combate por turnos entre guardianes de tres clases: Guerrero, Mago y Arquero. Cada personaje tiene nombre, vida, ataque y defensa. El programa calcula el daño según las habilidades de cada clase, actualiza la vida de los participantes y determina si hay un ganador o si el combate termina en empate técnico o por límite de rondas.
+Guardians of the Ancient Kingdom es un sistema de combate por turnos entre guardianes de tres clases: Guerrero, Mago y Arquero. Cada personaje tiene nombre, vida, ataque y defensa. El programa calcula el daño según las habilidades de cada clase, actualiza la vida de los participantes y determina si hay un ganador, un empate técnico o un empate por límite de rondas.
 
 ## 2. Requisitos
 
 - Python 3.10 o superior.
-- Pytest para ejecutar las pruebas automatizadas (opcional para ejecutar la demostración).
+- Pytest para ejecutar las pruebas automatizadas. Su instalación es opcional si solo se desea ejecutar la demostración.
 
 ## 3. Estructura del proyecto
 
@@ -27,7 +27,7 @@ Guardians of the Ancient Kingdom es un sistema de combate por turnos entre guard
 - **`Guerrero`:** potencia el ataque un 20 %, redondea hacia abajo el ataque potenciado y resta la defensa del objetivo.
 - **`Mago`:** inflige un daño igual a su ataque, sin descontar la defensa del objetivo.
 - **`Arquero`:** si su ataque supera la defensa enemiga, duplica la diferencia; de lo contrario, causa cero daño.
-- **`Combate`:** recibe dos personajes creados previamente, alterna sus turnos, muestra los estados y determina el resultado. No necesita comprobar la clase concreta del atacante para ejecutar su método `atacar()`.
+- **`Combate`:** recibe dos personajes creados previamente, alterna sus turnos, muestra sus estados y determina el resultado. No necesita comprobar la clase concreta del atacante para ejecutar `atacar()`.
 
 ## 5. Diagrama de clases UML
 
@@ -78,7 +78,7 @@ classDiagram
     Personaje --> Personaje : ataca a
 ```
 
-El triángulo de herencia indica que cada guardián es un tipo de `Personaje`. El rombo abierto en `Combate` representa la agregación: el combate administra personajes creados de manera independiente. La flecha de `Personaje` hacia sí misma representa la interacción entre el atacante y el objetivo.
+El triángulo de herencia indica que cada guardián es un tipo de `Personaje`. El rombo abierto en `Combate` representa la agregación: el combate administra personajes creados de manera independiente. La flecha de `Personaje` hacia sí misma representa la interacción entre atacante y objetivo.
 
 ## 6. Relaciones entre clases
 
@@ -86,17 +86,17 @@ El triángulo de herencia indica que cada guardián es un tipo de `Personaje`. E
 - **Asociación:** durante un ataque, un personaje interactúa con otro al invocar su método `recibir_danio()`.
 - **Agregación:** `Combate` recibe dos objetos ya creados y los coordina; no necesita crearlos dentro de su constructor.
 
-## 7. Conceptos de programación orientada a objetos aplicados
+## 7. Conceptos de programación orientada a objetos
 
 - **Abstracción:** `Personaje` representa las características y comportamientos comunes de los guardianes. Es una clase abstracta y no se puede instanciar directamente.
-- **Encapsulamiento:** los atributos se almacenan como atributos privados (`__nombre`, `__vida`, `__ataque` y `__defensa`). Se accede a ellos mediante propiedades que validan los datos.
+- **Encapsulamiento:** los atributos se almacenan como atributos privados (`__nombre`, `__vida`, `__ataque` y `__defensa`) y se accede a ellos mediante propiedades que validan los datos.
 - **Herencia:** las tres clases concretas reutilizan la estructura común de `Personaje`.
 - **Polimorfismo:** `Combate` llama a `atacar()` sin comprobar qué clase concreta tiene cada participante. Python ejecuta la implementación correspondiente al tipo de objeto.
 - **Validaciones y excepciones:** el sistema rechaza nombres vacíos, tipos de datos incorrectos y valores fuera de los rangos establecidos.
 
 ## 8. Lógica del combate
 
-Cada ronda da una oportunidad de ataque a cada participante mientras ambos sigan vivos. Después de cada ataque se muestra el estado actualizado de los personajes.
+Cada ronda da una oportunidad de ataque a cada participante mientras ambos sigan vivos. Después de cada ataque, se muestra el estado actualizado de los personajes.
 
 El combate termina cuando queda un único personaje vivo, cuando una ronda completa causa cero daño o cuando se alcanza el límite de 50 rondas.
 
@@ -132,9 +132,9 @@ python -m pytest -v
 
 Las pruebas automatizadas comprueban la creación de personajes, el rechazo de datos inválidos, las habilidades de ataque de las tres clases, la vida no negativa, el bloqueo de ataques de personajes derrotados, la validación de objetivos, la determinación del ganador y el empate técnico por ausencia de daño.
 
-En la ejecución realizada con `python -m pytest -v`, las **21 pruebas automatizadas finalizaron correctamente**.
+En la ejecución realizada anteriormente con `python -m pytest -v`, las **21 pruebas automatizadas finalizaron correctamente**.
 
-**Resultado:** `21 passed in 0.08s`.
+**Resultado registrado:** `21 passed in 0.08s`.
 
 ## 11. Reto de abstracción
 
@@ -144,7 +144,7 @@ El Guerrero potencia su ataque y resta la defensa del objetivo; el Mago ignora l
 
 Por eso, el decorador `@abstractmethod` exige que cada subclase implemente su propia versión del método. Esto también permite que `Combate` invoque `atacar()` de manera polimórfica.
 
-En cambio, `recibir_danio()` sí puede implementarse en `Personaje`, porque la regla para recibir daño es común a todas las clases: validar que la cantidad no sea negativa, descontar como máximo la vida disponible y evitar que la vida baje de cero.
+En cambio, `recibir_danio()` puede implementarse en `Personaje` porque la regla para recibir daño es común a todas las clases: validar que la cantidad no sea negativa, descontar como máximo la vida disponible y evitar que la vida baje de cero.
 
 El daño llega calculado desde el método de ataque, por lo que `recibir_danio()` no vuelve a descontar la defensa. Así se reutiliza una única regla general y se evita duplicar código en las tres clases.
 
@@ -152,4 +152,4 @@ El daño llega calculado desde el método de ataque, por lo que `recibir_danio()
 
 El proyecto demuestra cómo organizar un programa mediante clases con responsabilidades definidas, validar el estado de los objetos y aplicar los principios de abstracción, encapsulamiento, herencia y polimorfismo.
 
-Además, la separación entre las clases de personajes y la clase `Combate` facilita el mantenimiento y la ampliación del sistema. Para añadir una nueva clase de guardián, basta con heredar de `Personaje` e implementar el método `atacar()` sin necesidad de modificar la lógica central del combate.
+La separación entre las clases de personajes y la clase `Combate` facilita el mantenimiento y la ampliación del sistema. Para añadir una nueva clase de guardián, basta con heredar de `Personaje` e implementar el método `atacar()` sin necesidad de modificar la lógica central del combate.
